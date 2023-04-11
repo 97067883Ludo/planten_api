@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using planten_api;
@@ -11,9 +12,11 @@ using planten_api;
 namespace planten_api.Migrations
 {
     [DbContext(typeof(SoilMoistureContext))]
-    partial class SoilMoistureContextModelSnapshot : ModelSnapshot
+    [Migration("20230411075555_pk")]
+    partial class pk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

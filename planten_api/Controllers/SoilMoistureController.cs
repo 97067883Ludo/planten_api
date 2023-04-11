@@ -18,9 +18,7 @@ public class SoilMoistureController : ControllerBase
     [HttpGet]
     public ActionResult<List<SoilMoisture>> Get()
     {
-        
         return _db.SoilMoistures.ToList();
-
     }
 
     [HttpPost]
