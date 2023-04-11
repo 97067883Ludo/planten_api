@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "planten api", "planten api\planten api.csproj", "{1A393108-1043-4205-9419-55F918638B20}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "planten_api", "planten_api\planten_api.csproj", "{1A393108-1043-4205-9419-55F918638B20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
