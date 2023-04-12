@@ -3,6 +3,16 @@ using planten_api;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Cors",
+        policy =>
+        {
+            policy.WithOrigins("*")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -24,5 +34,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors();
 
 app.Run();
