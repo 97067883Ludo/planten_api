@@ -8,13 +8,12 @@ namespace planten_api.Controllers;
 [Route("/api/[controller]")]
 public class SoilMoistureController : ControllerBase
 {
+    private readonly SoilMoistureContext _db;
     public SoilMoistureController (SoilMoistureContext soilMoistureContext)
     {
         _db = soilMoistureContext;
     }
 
-    private readonly SoilMoistureContext _db;
-    
     [EnableCors("Cors")]
     [HttpGet]
     public ActionResult<List<SoilMoisture>> Get()
