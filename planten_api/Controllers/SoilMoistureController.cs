@@ -26,8 +26,6 @@ public class SoilMoistureController : ControllerBase
     [HttpPost]
     public IActionResult Post(SoilMoisture soilMoisture)    
     {
-        Console.WriteLine(soilMoisture.Id);
-        
         soilMoisture.createdAt = DateTime.Now;
         
         _db.SoilMoistures.Add(soilMoisture);
