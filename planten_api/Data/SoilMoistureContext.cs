@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-
-namespace planten_api;
+using planten_api.Models;
+namespace planten_api.Data;
 
 public class SoilMoistureContext : DbContext
 {

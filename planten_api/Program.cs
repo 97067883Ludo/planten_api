@@ -1,5 +1,6 @@
 
-using planten_api;
+using Microsoft.EntityFrameworkCore;
+using planten_api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SoilMoistureContext>();
+builder.Services.AddDbContext<DbContext>();
 
 var app = builder.Build();
 

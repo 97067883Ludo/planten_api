@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
+using planten_api.Data;
+using planten_api.Models;
 
 namespace planten_api.Controllers;
 
@@ -9,6 +10,7 @@ namespace planten_api.Controllers;
 public class SoilMoistureController : ControllerBase
 {
     private readonly SoilMoistureContext _db;
+
     public SoilMoistureController (SoilMoistureContext soilMoistureContext)
     {
         _db = soilMoistureContext;
