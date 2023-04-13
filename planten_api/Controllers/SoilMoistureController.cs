@@ -24,13 +24,8 @@ public class SoilMoistureController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Post(SoilMoisture soilMoisture)
-    { 
-        /*int ID = (from i in _db.SoilMoistures
-                select i.SoilMoistureId).Max();
-        
-        soilMoisture.SoilMoistureId = ID + 1;*/
-        
+    public IActionResult Post(SoilMoisture soilMoisture)    
+    {
         Console.WriteLine(soilMoisture.Id);
         
         soilMoisture.createdAt = DateTime.Now;

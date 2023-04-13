@@ -5,6 +5,7 @@ namespace planten_api;
 public class SoilMoistureContext : DbContext
 {
     private readonly IConfiguration _configuration;
+    
     public SoilMoistureContext(IConfiguration configuration)
     {
         _configuration = configuration;
