@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
+using planten_api.Dto.SoilMoisture;
 using planten_api.Models;
 
 namespace planten_api.Controllers;
@@ -22,14 +23,28 @@ public class SoilMoistureController : ControllerBase
     public  ActionResult<List<SoilMoisture>> Get()
     {
         var test = _db.SoilMoistures
-            .Include(moisture => moisture.device);
+            .Include(moisture => moisture.Device);
 
         return Ok(test);
     }
 
     [HttpPost]
-    public async Task<ActionResult> Post(SoilMoisture soilMoisture)    
+    public async Task<ActionResult> Post(SoilMoisturePostRequest soilMoisturePostRequest)
     {
+
+        var device = _db.Devices.Find(soilMoisturePostRequest.DeviceId);
+
+        if (device == null)
+        {
+            return NotFound("device not found");
+        }
+        
+        SoilMoisture soilMoisture = new SoilMoisture
+        {
+            Moisture = soilMoisturePostRequest.Moisture,
+            Device = device
+        };
+
         soilMoisture.createdAt = DateTime.Now;
         
         _db.SoilMoistures.Add(soilMoisture);

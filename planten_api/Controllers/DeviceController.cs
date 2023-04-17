@@ -20,7 +20,9 @@ public class DeviceController : ControllerBase
     [HttpGet]
     public ActionResult<Device> Get()
     {
-        var devices = _db.Devices.ToList();
+        var devices = _db.Devices
+            .Include(device => device.SoilMoisture);
+        
         return Ok(devices);
     }
 

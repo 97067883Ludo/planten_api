@@ -8,10 +8,9 @@ public class SoilMoisture
 {
     [Key]
     public int Id { get; set; }
-    
     public int Moisture { get; set; }
     public DateTime? createdAt { get; set; }
-    
+    public int? DeviceId { get; set; }
     [JsonIgnore]
-    public Device? device { get; set; }
+    public Device? Device { get; set; }
 }
