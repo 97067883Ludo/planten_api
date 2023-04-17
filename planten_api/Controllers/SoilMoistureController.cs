@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
 using planten_api.Models;
 
@@ -18,21 +19,22 @@ public class SoilMoistureController : ControllerBase
 
     [EnableCors("Cors")]
     [HttpGet]
-    public ActionResult<List<SoilMoisture>> Get()
+    public  ActionResult<List<SoilMoisture>> Get()
     {
-        var data = _db.SoilMoistures.ToList();
+        var test = _db.SoilMoistures
+            .Include(moisture => moisture.device);
 
-        return Ok(data);
+        return Ok(test);
     }
 
     [HttpPost]
-    public IActionResult Post(SoilMoisture soilMoisture)    
+    public async Task<ActionResult> Post(SoilMoisture soilMoisture)    
     {
         soilMoisture.createdAt = DateTime.Now;
         
         _db.SoilMoistures.Add(soilMoisture);
         
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
 
         return Ok();
     }

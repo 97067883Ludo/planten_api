@@ -12,8 +12,11 @@ public class SoilMoistureContext : DbContext
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
         AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
     }
+    
     public DbSet<SoilMoisture> SoilMoistures { get; set; }
     
+    public DbSet<Device> Devices { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("defaultConnection"));

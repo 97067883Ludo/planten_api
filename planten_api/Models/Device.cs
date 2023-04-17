@@ -5,9 +5,11 @@ namespace planten_api.Models;
 public class Device
 {
     [Key]
-    public int id { get; set; }
+    public int Id { get; set; }
 
-    public string name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
-    public string ip { get; set; }
+    public string Ip { get; set; } = string.Empty;
+
+    public ICollection<SoilMoisture>? SoilMoisture { get; set; }
 }
