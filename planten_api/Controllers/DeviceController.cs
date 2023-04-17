@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
+using planten_api.Dto.Device;
 using planten_api.Models;
 
 namespace planten_api.Controllers;
@@ -15,7 +16,6 @@ public class DeviceController : ControllerBase
     {
         _db = context;
     }
-
     
     [HttpGet]
     public ActionResult<Device> Get()
@@ -25,6 +25,25 @@ public class DeviceController : ControllerBase
         
         return Ok(devices);
     }
-
+    
+    [HttpPost]
+    public ActionResult<Device> Post(DeviceCreationDto deviceCreationDto)
+    {
+        if (deviceCreationDto.Name.Length < 1 || deviceCreationDto.Ip.Length < 1)
+        {
+            return UnprocessableEntity();
+        }
         
+        Device device = new Device
+        {
+            Name = deviceCreationDto.Name,
+            Ip = deviceCreationDto.Ip
+        };
+
+        _db.Devices.Add(device);
+
+        _db.SaveChanges();
+        
+        return Ok();
+    }
 }
