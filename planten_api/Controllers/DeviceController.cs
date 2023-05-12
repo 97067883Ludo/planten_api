@@ -25,20 +25,8 @@ public class DeviceController : ControllerBase
         var devices = _db.Devices
             .ToList();
 
-        List<DeviceDto> deviceDto = new List<DeviceDto>(); 
-        
-        foreach (Device device in devices)
-        {
-            deviceDto.Add(
-                new DeviceDto()
-                {
-                    Id = device.Id,
-                    Name = device.Name,
-                    Ip = device.Ip
-                }
-            );
-        }
-        
+        List<DeviceDto> deviceDto = new List<DeviceDto>();
+
         return Ok(deviceDto);
     }
 
