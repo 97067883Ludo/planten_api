@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
 using planten_api.Dto.Device;
 using planten_api.Models;
@@ -53,7 +52,7 @@ public class DeviceController : ControllerBase
         Device device = new Device
         {
             Name = deviceCreationDto.Name,
-            Ip = deviceCreationDto.Ip
+            Ip = deviceCreationDto.Ip,
         };
 
         _db.Devices.Add(device);

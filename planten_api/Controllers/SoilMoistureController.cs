@@ -32,21 +32,20 @@ public class SoilMoistureController : ControllerBase
     [HttpGet("{id:int}")]
     public ActionResult<List<SoilMoisture>> Get(int id)
     {
-        var soilMoistures = _db.SoilMoistures.Find(id);
+        var soilMoisture = _db.SoilMoistures.Find(id);
 
-        if (soilMoistures == null)
+        if (soilMoisture == null)
         {
             return NotFound();
         }
         
-        return Ok(soilMoistures);
+        return Ok(soilMoisture);
     }
 
     [HttpPost]
     public async Task<ActionResult> Post(SoilMoisturePostRequest soilMoisturePostRequest)
     {
-
-        var device = _db.Devices.Find(soilMoisturePostRequest.DeviceId);
+        var device = await _db.Devices.FindAsync(soilMoisturePostRequest.DeviceId);
 
         if (device == null)
         {
