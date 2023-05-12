@@ -24,10 +24,8 @@ public class DeviceController : ControllerBase
     {
         var devices = _db.Devices
             .ToList();
-
-        List<DeviceDto> deviceDto = new List<DeviceDto>();
-
-        return Ok(deviceDto);
+        
+        return Ok(devices);
     }
 
     [EnableCors("Cors")]
