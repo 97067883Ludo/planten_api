@@ -22,17 +22,25 @@ public class SoilMoistureController : ControllerBase
     [HttpGet]
     public  ActionResult<List<SoilMoisture>> Get()
     {
-        var test = _db.SoilMoistures
+        var soilMoisture = _db.SoilMoistures
             .Include(moisture => moisture.Device);
 
-        return Ok(test);
+        return Ok(soilMoisture);
+    }
+
+    [EnableCors("Cors")]
+    [HttpGet("{id:int}")]
+    public ActionResult<List<SoilMoisture>> Get(int id)
+    {
+        var soilMoisture = _db.SoilMoistures.Where(SoilMoisture => SoilMoisture.DeviceId == id);
+
+        return Ok(soilMoisture);
     }
 
     [HttpPost]
     public async Task<ActionResult> Post(SoilMoisturePostRequest soilMoisturePostRequest)
     {
-
-        var device = _db.Devices.Find(soilMoisturePostRequest.DeviceId);
+        var device = await _db.Devices.FindAsync(soilMoisturePostRequest.DeviceId);
 
         if (device == null)
         {
@@ -42,11 +50,9 @@ public class SoilMoistureController : ControllerBase
         SoilMoisture soilMoisture = new SoilMoisture
         {
             Moisture = soilMoisturePostRequest.Moisture,
-            Device = device
+            Device = device,
         };
 
-        soilMoisture.createdAt = DateTime.Now;
-        
         _db.SoilMoistures.Add(soilMoisture);
         
         await _db.SaveChangesAsync();
