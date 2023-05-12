@@ -32,8 +32,6 @@ public class SoilMoistureController : ControllerBase
     [HttpGet("{id:int}")]
     public ActionResult<List<SoilMoisture>> Get(int id)
     {
-        
-        
         var soilMoisture = _db.SoilMoistures.Where(SoilMoisture => SoilMoisture.DeviceId == id);
 
         return Ok(soilMoisture);
