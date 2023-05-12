@@ -32,13 +32,10 @@ public class SoilMoistureController : ControllerBase
     [HttpGet("{id:int}")]
     public ActionResult<List<SoilMoisture>> Get(int id)
     {
-        var soilMoisture = _db.SoilMoistures.Find(id);
-
-        if (soilMoisture == null)
-        {
-            return NotFound();
-        }
         
+        
+        var soilMoisture = _db.SoilMoistures.Where(SoilMoisture => SoilMoisture.DeviceId == id);
+
         return Ok(soilMoisture);
     }
 
