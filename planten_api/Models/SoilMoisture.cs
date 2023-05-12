@@ -9,7 +9,9 @@ public class SoilMoisture
     [Key]
     public int Id { get; set; }
     public int Moisture { get; set; }
-    public DateTime? createdAt { get; set; }
+    
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    
     public int? DeviceId { get; set; }
     [JsonIgnore]
     public Device? Device { get; set; }

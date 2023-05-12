@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace planten_api.Models;
 
@@ -11,5 +12,6 @@ public class Device
 
     public string Ip { get; set; } = string.Empty;
 
+    [JsonIgnore]
     public ICollection<SoilMoisture>? SoilMoisture { get; set; }
 }

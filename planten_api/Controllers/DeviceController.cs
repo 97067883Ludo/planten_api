@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
@@ -17,15 +18,44 @@ public class DeviceController : ControllerBase
         _db = context;
     }
     
+    [EnableCors("Cors")]
     [HttpGet]
     public ActionResult<Device> Get()
     {
         var devices = _db.Devices
-            .Include(device => device.SoilMoisture);
+            .ToList();
+
+        List<DeviceDto> deviceDto = new List<DeviceDto>(); 
         
-        return Ok(devices);
+        foreach (Device device in devices)
+        {
+            deviceDto.Add(
+                new DeviceDto()
+                {
+                    Id = device.Id,
+                    Name = device.Name,
+                    Ip = device.Ip
+                }
+            );
+        }
+        
+        return Ok(deviceDto);
     }
-    
+
+    [EnableCors("Cors")]
+    [HttpGet("{id:int}")]
+    public ActionResult<Device> Get(int id)
+    {
+        var test = _db.Devices.Find(id);
+
+        if (test == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(test);
+    }
+
     [HttpPost]
     public ActionResult<Device> Post(DeviceCreationDto deviceCreationDto)
     {
@@ -33,7 +63,7 @@ public class DeviceController : ControllerBase
         {
             return UnprocessableEntity();
         }
-        
+
         Device device = new Device
         {
             Name = deviceCreationDto.Name,
