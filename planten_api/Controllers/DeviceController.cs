@@ -61,4 +61,23 @@ public class DeviceController : ControllerBase
         
         return Ok();
     }
+    
+    [HttpPut]
+    public ActionResult<Device> Put(DeviceEditDto deviceEdit)
+    {
+        var device = _db.Devices.Find(deviceEdit.Id);
+
+        if (device == null)
+        {
+            return NotFound();
+        }
+        
+        device.Name = deviceEdit.Name;
+        device.Ip = deviceEdit.Ip;
+
+        _db.Devices.Update(device);
+        _db.SaveChanges();
+
+        return Ok(device);
+    }
 }
