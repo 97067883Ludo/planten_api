@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using planten_api.Data;
@@ -11,9 +12,11 @@ using planten_api.Data;
 namespace planten_api.Migrations
 {
     [DbContext(typeof(SoilMoistureContext))]
-    partial class SoilMoistureContextModelSnapshot : ModelSnapshot
+    [Migration("20230612083832_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,12 +32,6 @@ namespace planten_api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("ActivatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("ActiveDevice")
-                        .HasColumnType("boolean");
 
                     b.Property<bool?>("AutoDetected")
                         .HasColumnType("boolean");

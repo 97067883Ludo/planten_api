@@ -12,8 +12,8 @@ using planten_api.Data;
 namespace planten_api.Migrations
 {
     [DbContext(typeof(SoilMoistureContext))]
-    [Migration("20230417123928_init")]
-    partial class init
+    [Migration("20230613064029_added device active")]
+    partial class addeddeviceactive
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,12 @@ namespace planten_api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("ActiveDevice")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("AutoDetected")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Ip")
                         .IsRequired()
@@ -54,29 +60,29 @@ namespace planten_api.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Moisture")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("createdAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int?>("deviceId")
+                    b.Property<int?>("DeviceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Moisture")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("deviceId");
+                    b.HasIndex("DeviceId");
 
                     b.ToTable("SoilMoistures");
                 });
 
             modelBuilder.Entity("planten_api.Models.SoilMoisture", b =>
                 {
-                    b.HasOne("planten_api.Models.Device", "device")
+                    b.HasOne("planten_api.Models.Device", "Device")
                         .WithMany("SoilMoisture")
-                        .HasForeignKey("deviceId");
+                        .HasForeignKey("DeviceId");
 
-                    b.Navigation("device");
+                    b.Navigation("Device");
                 });
 
             modelBuilder.Entity("planten_api.Models.Device", b =>

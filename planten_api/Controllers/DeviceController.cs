@@ -62,8 +62,9 @@ public class DeviceController : ControllerBase
         return Ok();
     }
     
+    [EnableCors("Cors")]
     [HttpPut]
-    public ActionResult<Device> Put(DeviceEditDto deviceEdit)
+    public ActionResult<Device?> Put(DeviceEditDto deviceEdit)
     {
         var device = _db.Devices.Find(deviceEdit.Id);
 
