@@ -14,4 +14,10 @@ public class Device
 
     [JsonIgnore]
     public ICollection<SoilMoisture>? SoilMoisture { get; set; }
+
+    public bool? AutoDetected { get; set; } = false;
+
+    public bool ActiveDevice { get; set; } = true;
+
+    public DateTime ?ActivatedAt { get; set; }
 }

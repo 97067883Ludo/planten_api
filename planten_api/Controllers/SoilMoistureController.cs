@@ -46,6 +46,11 @@ public class SoilMoistureController : ControllerBase
         {
             return NotFound("device not found");
         }
+
+        if (!device.ActiveDevice)
+        {
+            return UnprocessableEntity("device is not active");
+        }
         
         SoilMoisture soilMoisture = new SoilMoisture
         {

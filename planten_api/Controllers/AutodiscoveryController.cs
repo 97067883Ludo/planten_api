@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using planten_api.Data;
 using planten_api.Dto.Device;
@@ -17,6 +17,7 @@ public class AutodiscoveryController : ControllerBase
         _db = context;
     }
 
+    [EnableCors("Cors")]
     [HttpPost]
     public ActionResult Post(AutoDeviceDiscoveryDto device)
     {
@@ -30,6 +31,8 @@ public class AutodiscoveryController : ControllerBase
                 {
                     Name = device.Name,
                     Ip = device.Ip,
+                    AutoDetected = true,
+                    ActiveDevice = false,
                 };
 
                 _db.Add(newDevice);
@@ -37,7 +40,7 @@ public class AutodiscoveryController : ControllerBase
                 
                 return Ok(newDevice);
             }
-            
+
             return UnprocessableEntity("Name Already in use...");
         }
         
@@ -49,5 +52,30 @@ public class AutodiscoveryController : ControllerBase
         }
 
         return Ok(foundDevice);
+    }
+
+    [HttpPut]
+    [Route("/api/startup-checkin")]
+    public ActionResult Put(AutoDeviceDiscoveryDto newDevice)
+    {
+        if (newDevice.Id == null)
+        {
+            return UnprocessableEntity("you cant update a device without an id");
+        }
+
+        Device ?device = _db.Devices.Find(newDevice.Id);
+
+        if (device == null)
+        {
+            return NotFound();
+        }
+
+        if (newDevice.Ip != device.Ip)
+        {
+            device.Ip = newDevice.Ip;
+            _db.SaveChanges();
+        }
+        
+        return Ok();
     }
 }
