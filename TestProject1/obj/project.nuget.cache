@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+y4hHjfsq+DlfkP9DjwpIPHe6f8Pe7/+lbAG8r25PHxj40YAVL+RRQaB5LZvmOEzPQZ4OM37PIevCOV3u8SQOA==",
+  "dgSpecHash": "egZoqYjLVUFnsad5AnbH7Uy2F5mZfB+/F8aZeid8rx9E/VRsyEh2AUui8CFdK7JLXvpQbFdidSrTc1zWUZcg0w==",
   "success": true,
   "projectFilePath": "/Users/ludotielbeke/RiderProjects/planten api/TestProject1/TestProject1.csproj",
   "expectedPackageFiles": [
+    "/Users/ludotielbeke/.nuget/packages/bcrypt.net-next/4.0.3/bcrypt.net-next.4.0.3.nupkg.sha512",
     "/Users/ludotielbeke/.nuget/packages/coverlet.collector/3.2.0/coverlet.collector.3.2.0.nupkg.sha512",
     "/Users/ludotielbeke/.nuget/packages/microsoft.aspnetcore.openapi/7.0.3/microsoft.aspnetcore.openapi.7.0.3.nupkg.sha512",
     "/Users/ludotielbeke/.nuget/packages/microsoft.codecoverage/17.5.0/microsoft.codecoverage.17.5.0.nupkg.sha512",

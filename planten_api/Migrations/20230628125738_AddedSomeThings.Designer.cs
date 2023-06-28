@@ -12,8 +12,8 @@ using planten_api.Data;
 namespace planten_api.Migrations
 {
     [DbContext(typeof(SoilMoistureContext))]
-    [Migration("20230613064029_added device active")]
-    partial class addeddeviceactive
+    [Migration("20230628125738_AddedSomeThings")]
+    partial class AddedSomeThings
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace planten_api.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActivatedAt")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("ActiveDevice")
                         .HasColumnType("boolean");
@@ -74,6 +77,31 @@ namespace planten_api.Migrations
                     b.HasIndex("DeviceId");
 
                     b.ToTable("SoilMoistures");
+                });
+
+            modelBuilder.Entity("planten_api.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("planten_api.Models.SoilMoisture", b =>
