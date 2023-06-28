@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using planten_api.Data;
 using planten_api.Dto.Device;
+using planten_api.Dto.Errors;
 using planten_api.Models;
 
 namespace planten_api.Controllers;
@@ -42,24 +43,26 @@ public class DeviceController : ControllerBase
     }
 
     [HttpPost]
+    [EnableCors("Cors")]
     public ActionResult<Device> Post(DeviceCreationDto deviceCreationDto)
     {
         if (deviceCreationDto.Name.Length < 1 || deviceCreationDto.Ip.Length < 1)
         {
-            return UnprocessableEntity();
+            return UnprocessableEntity( new UnprocessableErrorDto("Naam en Ip moet worden gevuld"));
         }
-
+        
         Device device = new Device
         {
             Name = deviceCreationDto.Name,
             Ip = deviceCreationDto.Ip,
+            ActivatedAt = DateTime.Now
         };
 
         _db.Devices.Add(device);
 
         _db.SaveChanges();
         
-        return Ok();
+        return Ok(device);
     }
     
     [EnableCors("Cors")]

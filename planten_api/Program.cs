@@ -1,6 +1,8 @@
 
+using System.Collections.Specialized;
 using Microsoft.EntityFrameworkCore;
 using planten_api.Data;
+using Quartz;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,21 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add services to the container.
+//var properties = new NameValueCollection();
+
+//IScheduler scheduler = await SchedulerBuilder.Create(properties)
+//    .UseDefaultThreadPool(x => x.MaxConcurrency = 5)
+//    .UseXmlSchedulingConfiguration(x =>
+//   {
+//        x.Files = new[] { "~/quartz_jobs.xml" };
+//
+//        x.FailOnFileNotFound = false;
+//
+//        x.FailOnSchedulingError = true;
+//    })
+//    .BuildScheduler();
+
+//await scheduler.Start();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

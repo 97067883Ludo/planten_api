@@ -19,7 +19,7 @@ public class AutodiscoveryController : ControllerBase
 
     [EnableCors("Cors")]
     [HttpPost]
-    public ActionResult Post(AutoDeviceDiscoveryDto device)
+    public ActionResult<Device> Post(AutoDeviceDiscoveryDto device)
     {
         if (device.Id == null)
         {
