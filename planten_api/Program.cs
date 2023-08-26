@@ -1,13 +1,17 @@
-
-using System.Collections.Specialized;
+using System.Text;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using planten_api.Common;
 using planten_api.Data;
-using Quartz;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
-{
+{ 
     options.AddPolicy("Cors",
         policy =>
         {
@@ -16,6 +20,31 @@ builder.Services.AddCors(options =>
                 .AllowAnyOrigin();
         });
 });
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+}); 
+
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        ValidateAudience = false, //demo
+        ValidateIssuer = false, // demo 
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+            builder.Configuration.GetSection("AppSettings:DOTNET_JWT_KEY").Value!))
+    };
+});
+
 
 //var properties = new NameValueCollection();
 
@@ -40,6 +69,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<SoilMoistureContext>();
 builder.Services.AddDbContext<DbContext>();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<IAssemblyMarker>();
 
 var app = builder.Build();
 

@@ -73,6 +73,7 @@ public class AutodiscoveryController : ControllerBase
         if (newDevice.Ip != device.Ip)
         {
             device.Ip = newDevice.Ip;
+            
             _db.SaveChanges();
         }
         
