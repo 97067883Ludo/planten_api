@@ -2,6 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BCrypt.Net;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using planten_api.Data;
@@ -27,6 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
+    [EnableCors("Cors")]
     [Route("register")]
     public ActionResult<User> Register(UserRegisterDto userRegisterDto)
     {
@@ -45,6 +47,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
+    [EnableCors("Cors")]
     [Route("login")]
     public ActionResult Login(UserLoginDto credentails)
     {
@@ -60,16 +63,17 @@ public class AuthController : ControllerBase
             return BadRequest("Credentails are not correct");
         }
 
-        String jwt = CreateAuthToken(User);
-
-        return Ok(jwt);
-    }
+        string jwt = CreateAuthToken(User);
+        
+        
+        return Ok(new {token = jwt});
+    } 
     
     private string CreateAuthToken(User user)
     {
-        List<Claim> claims = new List<Claim>()
+        List<Claim> claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username)
+            new (ClaimTypes.Name, user.Username)
         };
         
         var dotnetJwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
@@ -85,6 +89,7 @@ public class AuthController : ControllerBase
         );
         
         var jwt = new JwtSecurityTokenHandler().WriteToken(token);
+        
         
         return jwt;
     }
